@@ -1,5 +1,7 @@
 # TelCo Churn Classification Project
 
+## Telco Churn Data Dictionary
+
 | Target                   | Encoded          | Description                                                                                                                        | Data Type |
 |--------------------------|------------------|------------------------------------------------------------------------------------------------------------------------------------|-----------|
 | NA                       | autopayment      | Split payment_type and includes: Bank Transfer (automatic) and  Credit Card (automatic) (Yes or No).                               | NA        |
