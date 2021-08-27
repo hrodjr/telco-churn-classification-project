@@ -86,11 +86,26 @@ def clean_data(df):
     df['autopayment'] = df['bank_transfer'] + df['credit_card']
     df['not_autopayment'] = df['e_check'] + df['check']
 
+#after reviewing the autopayment and nonautopayment I want to combine the two to be autopayment (yes or no). 
+    df['auto_payment'] = df['autopayment'] + df['not_autopayment']
+
 #drop 'bank_transfer' and 'credit_card' columns
     df = df.drop(columns=['bank_transfer', 'credit_card', 'e_check', 'check'])
 
 #dropped the following columns after running univariate and bivariate statistics
-    df = df.drop(columns=['is_male', 'online_security', 'online_backup', 'device_protection', 'one_year_contract', 'two_year_contract', 'multiple_lines', 'total_charges'])
+    df = df.drop(columns=['is_male', 'online_security', 'online_backup', 'device_protection', 'one_year_contract', 'two_year_contract', 'multiple_lines', 'total_charges', 'autopayment', 'not_autopayment', 'streaming_tv', 'streaming_movies'])
+
+#convert uint8 to int64 for astethics.
+    df = df.astype({'dsl':'int64',
+    'fiber':'int64',
+    'no_internet':'int64',
+    'm2m':'int64',
+    'churned':'int64',
+    'partner':'int64',
+    'dependents':'int64',
+    'phone_service':'int64',
+    'tech_support':'int64',
+    'auto_payment':'int64'})
 
     return df
 
