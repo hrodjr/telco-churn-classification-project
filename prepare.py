@@ -11,7 +11,7 @@ def clean_data(df):
 #replaces empty values with 0
     df = df.replace({'total_charges': ' '}, 0)
 #drop redundant columns
-    df = df.drop(['payment_type_id', 'internet_service_type_id', 'contract_type_id', 'customer_id','senior_citizen','paperless_billing'], axis = 1)
+    df = df.drop(['payment_type_id', 'internet_service_type_id', 'contract_type_id', 'customer_id'], axis = 1)#,'senior_citizen','paperless_billing'
 #change from object to float
     df['total_charges'] = df['total_charges'].astype(float)
 #Replaces 'no ... service' with 'No' for encoding.
@@ -31,10 +31,11 @@ def clean_data(df):
     'device_protection',
     'tech_support',
     'streaming_tv',
-    'streaming_movies']], dummy_na=False, drop_first=[True, True])
+    'streaming_movies',
+    'senior_citizen','paperless_billing']], dummy_na=False, drop_first=[True, True])
 
 #set 'drop_first' to 'False' to encode multiple types of the below listed columns.
-    dummy_df_types = pd.get_dummies(df[['payment_type','internet_service_type','contract_type',]], dummy_na=False, drop_first=False)
+    dummy_df_types = pd.get_dummies(df[['payment_type','internet_service_type','contract_type']], dummy_na=False, drop_first=False)
 
 #now drop the above two columns...
     df = df.drop(columns=['dependents',
@@ -51,7 +52,8 @@ def clean_data(df):
     'tech_support',
     'streaming_tv',
     'streaming_movies',
-    'churn'])
+    'churn',
+    'senior_citizen','paperless_billing'])
 
 #...and concatanate the dummies df with the prep's df.
     df = pd.concat([df, dummy_df_types, dummy_df], axis=1)
@@ -79,33 +81,34 @@ def clean_data(df):
     'streaming_tv_Yes':'streaming_tv',
     'streaming_movies_Yes':'streaming_movies',
     'paperless_billing_Yes':'paperless',
-    'churn_Yes':'churned'})
+    'churn_Yes':'churned',
+    'senior_citizen_yes':'senior_citizen'})
 
 #after encoding the decision to concatanate bank_transfer and credit_card into auto_payment was made to whether or not autopayments had a play on churn.    
 #combine 'bank_transfer' and 'credit_card' with new 'auto_payment' column
-    df['autopayment'] = df['bank_transfer'] + df['credit_card']
-    df['not_autopayment'] = df['e_check'] + df['check']
+   # df['autopayment'] = df['bank_transfer'] + df['credit_card']
+   # df['not_autopayment'] = df['e_check'] + df['check']
 
 #after reviewing the autopayment and nonautopayment I want to combine the two to be autopayment (yes or no). 
-    df['auto_payment'] = df['autopayment'] + df['not_autopayment']
+    #df['auto_payment'] = df['autopayment'] + df['not_autopayment']
 
 #drop 'bank_transfer' and 'credit_card' columns
-    df = df.drop(columns=['bank_transfer', 'credit_card', 'e_check', 'check'])
+    #df = df.drop(columns=['bank_transfer', 'credit_card', 'e_check', 'check'])
 
 #dropped the following columns after running univariate and bivariate statistics
-    df = df.drop(columns=['is_male', 'online_security', 'online_backup', 'device_protection', 'one_year_contract', 'two_year_contract', 'multiple_lines', 'total_charges', 'autopayment', 'not_autopayment', 'streaming_tv', 'streaming_movies'])
+    #df = df.drop(columns=['is_male', 'online_security', 'online_backup', 'device_protection', 'one_year_contract', 'two_year_contract', 'multiple_lines', 'total_charges', 'autopayment', 'not_autopayment', 'streaming_tv', 'streaming_movies'])
 
 #convert uint8 to int64 for astethics.
-    df = df.astype({'dsl':'int64',
-    'fiber':'int64',
-    'no_internet':'int64',
-    'm2m':'int64',
-    'churned':'int64',
-    'partner':'int64',
-    'dependents':'int64',
-    'phone_service':'int64',
-    'tech_support':'int64',
-    'auto_payment':'int64'})
+    #df = df.astype({'dsl':'int64',
+ #   'fiber':'int64',
+ #   'no_internet':'int64',
+  #  'm2m':'int64',
+   # 'churned':'int64',
+ #   'partner':'int64',
+ #   'dependents':'int64',
+ #   'phone_service':'int64',
+ #   'tech_support':'int64',
+ #   'auto_payment':'int64'})
 
     return df
 
