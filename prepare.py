@@ -98,21 +98,23 @@ def clean_data(df):
 #dropped the following columns after running univariate and bivariate statistics
     #df = df.drop(columns=['is_male', 'online_security', 'online_backup', 'device_protection', 'one_year_contract', 'two_year_contract', 'multiple_lines', 'total_charges', 'autopayment', 'not_autopayment', 'streaming_tv', 'streaming_movies'])
 
-#convert uint8 to int64 for astethics.
-    #df = df.astype({
-    #'bank_transfer',
-    #
-    # 
-    #'dsl':'int64',
- #   'fiber':'int64',
- #   'no_internet':'int64',
-  #  'm2m':'int64',
-   # 'churned':'int64',
- #   'partner':'int64',
- #   'dependents':'int64',
- #   'phone_service':'int64',
- #   'tech_support':'int64',
- #   'auto_payment':'int64'})
+#convert uint8 to int64 for uniformity.
+    df = df.astype({
+    'fiber':'int64',
+    'm2m':'int64',
+    'churned':'int64',
+    'is_male':'int64',
+    'partner':'int64',
+    'dependents':'int64',
+    'phone_service':'int64',
+    'multiple_lines':'int64',
+    'online_security':'int64',
+    'online_backup':'int64',
+    'device_protection':'int64',
+    'tech_support':'int64',
+    'streaming_tv':'int64',
+    'streaming_movies':'int64',
+    'autopayment':'int64'})
 
     return df
 
