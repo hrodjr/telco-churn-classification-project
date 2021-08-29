@@ -91,9 +91,15 @@ def clean_data(df):
 #I decided change the following variables into single features.
     df['autopayment'] = df['bank_transfer'] + df['credit_card']
 
+#added 'partner' and 'dependents' together, converted it to boolean then back into int64 as 'not_single'. This column
+#will help with the hypothesis of whether or not churn is dependent on singles or not.
+    df['partnered']=df['partner'] + df['dependents']
+    df['bool'] = df['partnered'].astype('bool')
+    df['not_single'] = df['bool'].astype('int64')
+
 #drop original of new features.
 #removed total charges. The focus here is on how monthly charges may or may no affect churn rates.
-    df = df.drop(columns=['bank_transfer', 'credit_card', 'e_check', 'check', 'one_year_contract', 'two_year_contract', 'no_internet', 'dsl', 'total_charges'])
+    df = df.drop(columns=['bank_transfer', 'credit_card', 'e_check', 'check', 'one_year_contract', 'two_year_contract', 'no_internet', 'dsl', 'total_charges', 'partner', 'dependents', 'partnered', 'bool'])
 
 #dropped the following columns after running univariate and bivariate statistics
     df = df.drop(columns=['is_male', 'multiple_lines', 'streaming_tv', 'streaming_movies'])
@@ -102,8 +108,6 @@ def clean_data(df):
     'fiber':'int64',
     'm2m':'int64',
     'churned':'int64',
-    'partner':'int64',
-    'dependents':'int64',
     'phone_service':'int64',
     'online_security':'int64',
     'online_backup':'int64',
