@@ -97,15 +97,32 @@ Goal:
         * Null: Churn is independent on phone services.
         * Alternate: Churn is dependent on phone services.
             
-    FINAL HYPOTHESIS:
+    Initial FINAL HYPOTHESIS failed to reject the null:
 
     Customers who are young, single, on fiber, has phone service, on m2m, and not enrolled in a autopayment plan are more likely to churn than those customers that do not fall in this category. (ttest 1samp)
         * Null: Customers who are young, single, on fiber, has phone service, on m2m, and not enrolled on the autopayment plan are no different than the rest of the population.
         * Alternate: Customers who are young, single, on fiber, has phone service, on m2m, and not enrolled on the autopayment plan is different than the rest of the population.
+        
+    After initial exploration, test, and modeling a new hypothesis was developed and retested.
+    
+    Customers are more likely to churn under one year that pay higher monthly rates. (ttest 1samp)
+    * Null: Customers who churn under one year that pay higher monthly rates are NO different than those who stay and pay less.
+    * Alternate: Customers who churn under one year that pay higher monthly rates are different than those who stay and pay less.
+    
+    The ttest rejected the null and was validated through modeling.
 
 ## Key Findings, Takeaways & Recommendations
 ##### Key Findings
-    Customers who are young, single, on fiber, has phone service, on m2m, and not enrolled on the autopayment plan is different than the rest of the population.
+    KEY Takeaways on less than 12 months
+    - Seniors churn, but not due to cost.
+    - Where younger customers churn in the first 12 months due to higher costs. Which fits our Hyp #5.
+    - We also see that online services and wutopayments have little affect on churn in the first 12 months.
+    - Customers with phone_services and device_protection seem to churn more in the first 12 months.
+    - Churn results from higher charges:
+        *Fiber customers pay more (churn happens more for customers who do not have online services.)
+        *Are young and single
+        *have phone_service (churn happens more for those who do not have device_protection)
+        *not on an autopayment plan
 ##### Takeaways
     Customer churn rates are dependent on high monthly payments and occur early on in customer tenure.
 ##### Recommendations
@@ -156,3 +173,4 @@ Goal:
 | monthly_charges          | monthly_charges   | Monthly billing amount in dollars.                                                                                                                                  | float64   |
 | total_charges            | DROPPED           | Total billing over tenure in dollars.                                                                                                                               | object    |
 | churn                    | churned           | Whether or not a customer has churned (Yes or No).                                                                                                                  | int64     |
+| NA                       | tenure_le2_1year_m2mGR65 | tenure <= 12 months and m2m greater than 65.25 (Yes or No)                                                                                                    | int64     |
